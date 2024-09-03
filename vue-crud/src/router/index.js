@@ -33,7 +33,7 @@ const router = createRouter({
       path: '/posts/postDelete/:id',
       name: 'Delete',
       component: Delete
-    }
+    },
     // {
     //   path: '/about',
     //   name: 'about',

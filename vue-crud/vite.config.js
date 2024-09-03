@@ -13,4 +13,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
+  // server: { // Vite의 개발 서버 설정
+  //   port: 8083 // 원하는 포트 번호 설정
+  // }
 })

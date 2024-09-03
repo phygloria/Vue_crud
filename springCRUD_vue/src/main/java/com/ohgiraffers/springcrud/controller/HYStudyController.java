@@ -2,10 +2,8 @@ package com.ohgiraffers.springcrud.controller;
 
 import com.ohgiraffers.springcrud.dao.HYStudyRepository;
 import com.ohgiraffers.springcrud.model.dto.HYStudyDTO;
-import com.ohgiraffers.springcrud.model.entity.HYStudyEntity;
 import com.ohgiraffers.springcrud.service.HYStudyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,26 +12,29 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 
-
+@CrossOrigin(origins = "http://localhost:8083")
 @RestController //사용자의 요청을 컨트롤하겠다는 어노테이션
-//@RequestMapping("/api") //URL 패턴을 매핑하여 어떤 요청이 특정 메소드나 컨트롤러에 의해 처리될지를 정의
+@RequestMapping("/api") //URL 패턴을 매핑하여 어떤 요청이 특정 메소드나 컨트롤러에 의해 처리될지를 정의
 //기본적으로 루트 URL("/")로 들어오는 모든 요청을 해당 핸들러 메소드나 컨트롤러로 매핑
 public class HYStudyController {
 
     // MVC 패턴에 따라 service 클래스를 선언한다
-    private HYStudyService hyStudyService;
+    private final HYStudyService hyStudyService;
+    public final HYStudyRepository hyStudyRepository;
+
 
     @Autowired // 자동주입 어노테이션 / Service 인스턴스를 자동으로 주입
-    public HYStudyController(HYStudyService hyStudyService) {
+    public HYStudyController(HYStudyService hyStudyService, HYStudyRepository hyStudyRepository) {
         //생성자를 통해 서비스 인스터스를 저장
         this.hyStudyService = hyStudyService;
+        this.hyStudyRepository = hyStudyRepository;
     }
 
-    /* [view 페이지] */
-    @GetMapping("/")
-    public String viewMain(){
-        return "viewMain";
-    }
+//    /* [view 페이지] */
+//    @GetMapping("/")
+//    public String viewMain(){
+//        return "viewMain";
+//    }
 
     /* [등록하기] */
     // 글을 등록하기 위한 화면은 posts.html
@@ -78,7 +79,7 @@ public class HYStudyController {
 
     /* [전체조회] */
     // 등록된거 확인
-    @GetMapping("/postList")
+    @GetMapping("/")
     public String postList(@RequestBody Model model){
         //▽ 서비스 클래스에서 조회 함수를 불러온다. .viewAllposts()
         //▽ 여러개니까 List<BlogDTO> 타입으로 가져온다.
@@ -123,7 +124,7 @@ public class HYStudyController {
 
     /* [수정하기] */
     // 수정할 포스트를 먼저 가져온다.
-    @GetMapping("/posts/postUpdate/{id}")
+    @PutMapping("/posts/postUpdate/{id}")
     public String postEdit(@PathVariable("id") Long id, Model model) {
         // 호출하는 함수가 자료형타입이 같아야함. 포스트를 먼저 가져오기때문에 상세조회와 거의 같다.
 
@@ -162,7 +163,7 @@ public class HYStudyController {
     }
 
     /* [삭제하기] */
-    @GetMapping("/posts/postDelete/{id}")
+    @DeleteMapping("/posts/postDelete/{id}")
     public ModelAndView postDelete(@PathVariable("id") Long id, ModelAndView mv){
         HYStudyDTO deleteDTO = hyStudyService.postView(id);
         mv.addObject("post", deleteDTO);

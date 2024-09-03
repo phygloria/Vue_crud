@@ -2,10 +2,10 @@
   <div>
     <h2>All Items</h2>
     <ul>
-      <li v-for="item in items" :key="item.id">
-        {{ item.name }}
-        <button @click="editItem(item)">Edit</button>
-        <button @click="deleteItem(item.id)">Delete</button>
+      <li v-for="post in posts" :key="post.id">
+        {{ post.title }}
+        <button @click="editItem(post)">Edit</button>
+        <button @click="deleteItem(post.id)">Delete</button>
       </li>
     </ul>
   </div>
@@ -17,28 +17,28 @@ import axios from 'axios';
 
 export default {
   setup() {
-    const items = ref([]);
+    const posts = ref([]);
 
-    const editItem = (item) => {
-      // Implement edit functionality
-    };
+    // const editItem = (item) => {
+    //   // Implement edit functionality
+    // };
 
-    const deleteItem = (itemId) => {
-      // Implement delete functionality
-    };
+    // const deleteItem = (itemId) => {
+    //   // Implement delete functionality
+    // };
 
     onMounted(() => {
-        axios.get('http://localhost:8083').then((response) => {
-            this.items = response.data;
+        axios.get('http://localhost:8083/api/postList').then((response) => {
+            this.posts = response.data;
         });
       // Fetch items from the server or an API
       // and assign them to the 'items' ref
     });
 
     return {
-      items,
-      editItem,
-      deleteItem,
+      posts,
+      // editItem,
+      // deleteItem,
     };
   },
 };
