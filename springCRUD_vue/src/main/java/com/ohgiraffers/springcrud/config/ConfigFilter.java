@@ -13,7 +13,6 @@ public class ConfigFilter implements WebMvcConfigurer {
                 .allowedOriginPatterns("http://localhost:5173")
                 .allowedMethods("GET", "POST", "DELETE", "OPTIONS", "PUT")
                 .allowedHeaders("*")
-                .exposedHeaders("Custom-Header")
                 .allowCredentials(true);
     }
 

@@ -1,29 +1,38 @@
 <template>
+  <router-link to="/post/api/park">푸른공원</router-link> 
+  <!-- 컴포넌트 안에서 라우터링크를 쓰면 해당페이지안에만 존재하는 링크생성 -->
+   <!-- 라우터 인덱스에서 링크한 것들은 네비바가 되어 어디서든 존재함  -->
+  <div>
+      <h2>HOME</h2>
+  </div>
+
+
   <div class="list row">
-    <!-- <div class="col-md-8">
-      <div class="input-group mb-3">
+    <div class="col-md-8">
+      <div class="input-group 3">
         <input type="text" class="form-control" placeholder="Search by title"
           v-model="title"/>
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button"
-            @click="searchTitle"
-          >
+            @click="searchTitle">
             Search
           </button>
         </div>
       </div>
-    </div> -->
-    <div class="col-md-6">
+    </div>
+
+
+    <div>
       <h4>Posts List</h4>
-      <ul class="list">
-        <li class="list-group-post"
+      <ul class="list-ul">
+        <li class="list-li"
           :class="{ active: index == currentIndex }"
-          v-for="( post, index ) in posts"
-          :key="index"
-          @click="setActivePosts( post, index )"
+          v-for="post in posts"
+          :key="post.id"
+          @click="setActivePosts( post.id, index )"
         >
           {{ post.title }}
-
+          <router-link :to="'/post/${post.id}'"><button @click="postView">보기</button></router-link>
         </li>
       </ul>
 
